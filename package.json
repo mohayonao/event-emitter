@@ -1,7 +1,7 @@
 {
   "name": "@mohayonao/event-emitter",
   "description": "tiny event emitter",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "mohayonao <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/event-emitter/issues"
