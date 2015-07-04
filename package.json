@@ -1,0 +1,19 @@
+{
+  "name": "@mohayonao/event-emitter",
+  "description": "tiny event emitter",
+  "version": "0.0.0",
+  "author": "mohayonao <mohayonao@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/mohayonao/event-emitter/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/mohayonao/event-emitter/",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohayonao/event-emitter.git"
+  },
+  "scripts": {}
+}
