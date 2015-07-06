@@ -1,12 +1,14 @@
 "use strict";
 
+var LISTENERS = typeof Symbol !== "undefined" ? Symbol("LISTENERS") : "_@mohayonao/event-emitter:listeners";
+
 function EventEmitter() {
-  this._callbacks = {};
+  this[LISTENERS] = {};
 }
 
 EventEmitter.prototype.listeners = function(event) {
-  if (this._callbacks.hasOwnProperty(event)) {
-    return this._callbacks[event].map(function(listener) {
+  if (this[LISTENERS].hasOwnProperty(event)) {
+    return this[LISTENERS][event].map(function(listener) {
       return listener.listener || listener;
     }).reverse();
   }
@@ -16,10 +18,10 @@ EventEmitter.prototype.listeners = function(event) {
 
 EventEmitter.prototype.addListener = function(event, listener) {
   if (typeof listener === "function") {
-    if (!this._callbacks.hasOwnProperty(event)) {
-      this._callbacks[event] = [ listener ];
+    if (!this[LISTENERS].hasOwnProperty(event)) {
+      this[LISTENERS][event] = [ listener ];
     } else {
-      this._callbacks[event].unshift(listener);
+      this[LISTENERS][event].unshift(listener);
     }
   }
 
@@ -50,8 +52,8 @@ EventEmitter.prototype.once = function(event, listener) {
 EventEmitter.prototype.removeListener = function(event, listener) {
   var listeners, i;
 
-  if (typeof listener === "function" && this._callbacks.hasOwnProperty(event)) {
-    listeners = this._callbacks[event];
+  if (typeof listener === "function" && this[LISTENERS].hasOwnProperty(event)) {
+    listeners = this[LISTENERS][event];
 
     for (i = listeners.length - 1; i >= 0; i--) {
       if (listeners[i] === listener || listeners[i].listener === listener) {
@@ -66,9 +68,9 @@ EventEmitter.prototype.removeListener = function(event, listener) {
 
 EventEmitter.prototype.removeAllListeners = function(event) {
   if (typeof event === "undefined") {
-    this._callbacks = {};
-  } else if (this._callbacks.hasOwnProperty(event)) {
-    delete this._callbacks[event];
+    this[LISTENERS] = {};
+  } else if (this[LISTENERS].hasOwnProperty(event)) {
+    delete this[LISTENERS][event];
   }
 
   return this;
@@ -77,8 +79,8 @@ EventEmitter.prototype.removeAllListeners = function(event) {
 EventEmitter.prototype.emit = function(event, arg1) {
   var listeners, i;
 
-  if (this._callbacks.hasOwnProperty(event)) {
-    listeners = this._callbacks[event];
+  if (this[LISTENERS].hasOwnProperty(event)) {
+    listeners = this[LISTENERS][event];
 
     for (i = listeners.length - 1; i >= 0; i--) {
       listeners[i](arg1);
